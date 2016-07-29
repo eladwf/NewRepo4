@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Main Menu";
+}
+<br />
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+
+            
+            <a asp-controller="Home" asp-action="Lobby" class="btn btn-block btn-primary" role="button">One on One game</a>
+            <a asp-controller="Home" asp-action="ClassLobby" class="btn btn-block btn-primary" role="button">Class game</a>
+            
+            <a asp-controller="Home" asp-action="Score" class="btn btn-block btn-primary" role="button">High score</a>
+          
+        </div>
+        <div class="col-md-6">
+            <p>
+              <strong>One on One game - </strong> Play against random player or set a room password and tell it to your friend.<br />
+               <strong>Class Game - </strong> The creator of the room plays the teacher. the teacher can add custom questions and let his students compete against each other.<br />
+               <strong>High Score - </strong> Dispalys the global score table.
+            </p>
+        </div>
+    </div>
+</div>
+

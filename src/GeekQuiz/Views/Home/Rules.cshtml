@@ -1,0 +1,142 @@
+﻿@using GeekQuiz.Models
+@using System.Security.Claims
+@model Room
+
+
+@{
+    ViewData["Title"] = "Rules";
+
+}
+
+
+<h2>Rules for game room</h2>
+
+<div class="container">
+    @using (Html.BeginForm("Rules", "Home", FormMethod.Post, new { @class = "form-horizontal", @id = "signupform" }))
+    {
+
+
+
+        <div class="form-group">
+            <label class="control-label " for="title">Room name:</label>
+
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Title)
+
+        </div>
+
+
+        <div class="form-group">
+
+
+
+            <div class="row" style="display:inline-flex">
+
+                <label class="control-label " for="islocked">lock room:    </label>
+
+                @Html.CheckBoxFor(model => model.IsLocked, new { @checked = true, @style = "margin-top:10px; margin-left:10px;" })
+            </div>
+
+        </div>
+
+            <div class="row mypass">
+                <label class="control-label col-2m-1" id="pass" for="title">Password:</label>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password)
+
+            </div>
+
+
+
+
+            <h2>Category</h2>
+
+            @Html.DropDownListFor(model => model.Catgory, new SelectList(Enum.GetValues(typeof(GeekQuiz.Models.Room.Catrgory))), new { @class = "form-control" })
+
+
+
+            <h2>Number of questions</h2>
+
+            <div class="btn-group" data-toggle="buttons" style="color:white;">
+                <label class="btn btn-primary">
+                    @Html.RadioButtonFor(m => m.NumOfQuestion, 10) 10
+                </label>
+                <label class="btn btn-primary">
+                    @Html.RadioButtonFor(m => m.NumOfQuestion, 15) 15
+                </label>
+                <label class="btn btn-primary">
+                    @Html.RadioButtonFor(m => m.NumOfQuestion, 20) 20
+                </label>
+            </div>
+
+            <h2>Time per question (in seconds)</h2>
+
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary">
+                    @Html.RadioButtonFor(m => m.Timeperquestion, 25) 25
+                </label>
+                <label class="btn btn-primary">
+                    @Html.RadioButtonFor(m => m.Timeperquestion, 30) 30
+                </label>
+                <label class="btn btn-primary ">
+                    @Html.RadioButtonFor(m => m.Timeperquestion, 40) 40
+                </label>
+                <label class="btn btn-primary ">
+                    @Html.RadioButtonFor(m => m.Timeperquestion, 50) 50
+                </label>
+
+            </div>
+            <br />
+            <br />
+
+
+
+
+            <br />
+            <br />
+
+            <input class="btn btn-success" type="submit" value="Startgame" />
+    }
+</div>
+   
+@section Scripts {
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+
+            if ($("#IsLocked").is(":checked"))
+                $(".mypass").show();
+            else
+                $(".mypass").hide();
+
+        });
+
+
+        $(function () {
+            $("#IsLocked").click(function () {
+                if ($(this).is(':checked')) {
+                    $(".mypass").show();
+
+
+                }
+                else {
+
+
+                    $(".mypass").hide();
+
+
+                }
+            });
+        });
+
+
+
+
+
+
+    </script>
+
+
+}
+

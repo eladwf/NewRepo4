@@ -1,0 +1,56 @@
+@model GeekQuiz.Models.Room
+
+@{
+    ViewData["Title"] = "Summary";
+}
+
+<h2>Summary</h2>
+
+<div>
+    
+    <table class="table">
+        <thead >
+
+
+
+            <tr>
+                <th scope="row">#</th>
+                <td>@Html.DisplayNameFor(m => m.score[0].name) </td>
+                <td>@Html.DisplayNameFor(m => m.score[0].score) </td>
+
+            </tr>
+        </thead>
+        <tbody>
+            
+            @{ var max = 0;}
+            @for (var i = 0; i < Model.score.Count; i++)
+            {
+                if (max < Model.score[i].score)
+                {
+                    max = Model.score[i].score;
+                }
+            }
+            @for (var i = 0; i < Model.score.Count; i++)
+            {
+                if (max<=Model.score[i].score)
+                {
+                <tr  style="background-color:chartreuse"> 
+                    <th scope="row">@i</th>
+                    <td>@Html.DisplayFor(m => m.score[i].name)</td>
+                    <td>@Html.DisplayFor(m => m.score[i].score) </td>
+                </tr>
+                }
+                else
+                {
+                    <tr >
+                        <th scope="row">@i</th>
+                        <td>@Html.DisplayFor(m => m.score[i].name)</td>
+                        <td>@Html.DisplayFor(m => m.score[i].score) </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+</div>
+

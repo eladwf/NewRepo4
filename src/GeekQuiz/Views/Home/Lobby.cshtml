@@ -1,0 +1,96 @@
+﻿
+@model List<Room>
+<div class="container">
+    <h1>Rooms</h1>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Room Name</th>
+                    <th>Admin Name</th>
+                    <th>Active</th>
+                    <th>
+                    <th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var room in Model)
+                {
+
+                    @if (room.IsLocked)
+                    {
+
+                        <tr>
+
+                            <td>@room.Title</td>
+                            <td>@room.AdminName </td>
+                            <td>@room.IsActive </td>
+                            <td>@Html.ActionLink("Enter", null, null, @room, new { @class = "btn btn-primary", id = @room.RoomID, onclick = "opend(this.id)" })</td>
+                        </tr>
+
+                    }
+                    else
+                    {
+
+                        <tr>
+
+                            <td>@room.Title</td>
+                            <td>@room.AdminName </td>
+                            <td>@room.IsActive </td>
+                            <td>@Html.ActionLink("Enter", "EnterRoomNoPass", "Home", @room, new { @class = "btn btn-primary" })</td>
+                        </tr>
+
+                    }
+
+                }
+            </tbody>
+        </table>
+    </div>
+    <a asp-controller="Home" asp-action="Rules" class="btn btn-block btn-primary" role="button">Create Room</a>
+</div>
+<div id="divDialog"></div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    function opend(room) {
+
+        var password = prompt("Enter password:");
+        if (password == null)
+            return;
+        if (password == "")
+            return;
+
+        var obj = { roomID: room, pass: password };
+
+        CallService(obj)
+    }
+    function CallService(mystorage) {
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("EnterRoom", "Home")',
+                contentType: "application/json;charset=utf-8",
+                data: mystorage,
+                dataType: "json",
+                success: function (data) {
+
+
+
+                    if (data == "ddd")
+
+                        window.location.href = "Room";
+                    else
+                        alert("wrong password");
+                },
+
+                error: function () { alert('error....'); }
+            });
+        });
+    }
+
+
+
+
+
+</script>

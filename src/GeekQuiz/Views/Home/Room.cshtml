@@ -1,0 +1,89 @@
+@model GeekQuiz.Models.Room
+
+@{
+    if (ViewData["RoomEmpty"] == null)
+    {
+
+        ViewData["RoomEmpty"] = false;
+    }
+}
+
+
+<h2 id="RoomTitle">Room <span style="color:rgba(122, 20, 147, 0.82);">@Html.DisplayFor(model => model.Title)</span> </h2>
+
+
+
+<hr />
+
+<div class="row">
+    <ul class="list-group col-lg-3">
+        <li class="list-group-item ">Admin:@Html.DisplayFor(model => model.AdminName)</li>
+        <li class="list-group-item ">Catgory:@Html.DisplayFor(model => model.Catgory)</li>
+        <li class="list-group-item ">@Html.DisplayNameFor(model => model.NumOfQuestion):@Html.DisplayFor(model => model.NumOfQuestion)</li>
+        <li class="list-group-item ">@Html.DisplayNameFor(model => model.Timeperquestion):@Html.DisplayFor(model => model.Timeperquestion)</li>
+
+    </ul>
+
+
+    <div class="col-lg-2">
+
+
+        <h2 id="notwaiting" style="display: none">Game Ready</h2>
+        <a id="play" style="display: none" href="@Url.Action("StartGame","Home")" class="btn  my-btn-primary"> Start game </a>
+    </div>
+
+    <div class="col-lg-3">
+
+        <ul id="user"></ul>
+
+
+    </div>
+
+
+
+
+
+
+</div>
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+    System.config({
+        packages: { 'js': { defaultExtension: 'js' } }
+    });
+    System.import('../js/app.js');
+    System.import('../lib/jquery/dist/jquery.min.js');
+
+    var time = setInterval(function () { if (CallService()) { clearInterval(time); } }, 1000);
+
+
+
+    function CallService() {
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("UserList","Home")',
+                contentType: "application/json;charset=utf-8",
+                data: { a: "testing" },
+                dataType: "json",
+                success: function (data) {
+                    $("#user").empty()
+                    var count = 0;
+                    $.each(data, function (index, item) {
+                        $("#user").append("<li class='list-group-item'>" + item + '</li>');
+                        count++;
+                    });
+                    if (count == 2)
+                        $('#play').show()
+                    else {
+
+                        $('#play').hide();
+                    }
+                },
+                error: function () { alert('error....'); }
+            });
+        });
+
+    }
+    </script>
+}

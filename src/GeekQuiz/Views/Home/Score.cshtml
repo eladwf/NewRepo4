@@ -1,0 +1,54 @@
+﻿@model List<UserAtrr>
+@{
+    ViewData["Title"] = "High score";
+}
+
+<h2>High Score</h2>
+
+<div>
+
+    <table class="table">
+        <thead>
+
+
+
+            <tr>
+                <th scope="row">#</th>
+                <td>@Html.DisplayNameFor(m=> m[0].UserName) </td>
+                <td>@Html.DisplayNameFor(m => m[0].GlobalScore) </td>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @{ var max = 0;}
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                if (max < Model[i].GlobalScore)
+                {
+                    max = Model[i].GlobalScore;
+                }
+            }
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                if (max <= Model[i].GlobalScore)
+                {
+                    <tr style="background-color:chartreuse">
+                        <th scope="row">@i</th>
+                        <td>@Html.DisplayFor(m => m[i].UserName)</td>
+                        <td>@Html.DisplayFor(m => m[i].GlobalScore) </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td>@Html.DisplayFor(m => m[i].UserName)</td>
+                        <td>@Html.DisplayFor(m => m[i].GlobalScore) </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+</div>

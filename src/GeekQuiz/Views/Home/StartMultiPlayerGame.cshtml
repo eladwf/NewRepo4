@@ -1,0 +1,38 @@
+﻿@using System.Security.Claims
+@{
+    ViewData["Title"] = "Play";
+}
+
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <geekquiz-app>Loading...</geekquiz-app>
+            <a asp-controller="Home" asp-action="ExitGame" class="btn btn-block btn-primary" role="button">exit</a>
+        </div>
+    </div>
+</section>
+
+
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        System.config({
+            packages: { 'js': { defaultExtension: 'js' } }
+        });
+        System.import('../js/app2.js');
+        System.import('../lib/jquery/dist/jquery.min.js');
+        $(window).on('beforeunload', function (e) {
+            $.post("/Home/ExitGame");
+
+            return;
+        });
+        history.pushState(null, null, document.title);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, document.title);
+        });
+
+
+    </script>
+
+}

@@ -1,0 +1,56 @@
+@model GeekQuiz.Models.Room
+
+@{
+    ViewData["Title"] = "Teacher view";
+}
+
+<h2>Teacher view</h2>
+
+<div>
+    
+    <table class="table">
+        <thead >
+
+
+
+            <tr>
+                <th scope="row">#</th>
+                <td>@Html.DisplayNameFor(m => m.Players[0].UserName) </td>
+                <td>@Html.DisplayNameFor(m => m.Players[0].RoomScore) </td>
+
+            </tr>
+        </thead>
+        <tbody>
+
+    @{ var max = 0;}
+    @for (var i = 0; i < Model.Players.Count; i++)
+            {
+                if (max < Model.Players[i].RoomScore)
+                {
+                    max = Model.Players[i].RoomScore;
+                }
+            }
+    @for (var i = 0; i < Model.Players.Count; i++)
+    {
+        if (max <= Model.Players[i].RoomScore)
+        {
+            <tr style="background-color:chartreuse">
+                <th scope="row">@i</th>
+                <td>@Html.DisplayFor(m => m.Players[i].UserName)</td>
+                <td>@Html.DisplayFor(m => m.Players[i].RoomScore) </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <th scope="row">@i</th>
+                <td>@Html.DisplayFor(m => m.Players[i].UserName)</td>
+                <td>@Html.DisplayFor(m => m.Players[i].RoomScore) </td>
+            </tr>
+        }
+
+    }
+        </tbody>
+    </table>
+</div>
+
